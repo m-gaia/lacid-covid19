@@ -1,0 +1,9 @@
+﻿DAX
+
+Calendario = CALENDAR(MIN('Casos Covid-19'[Date]), MAX('Casos Covid-19'[Date]))
+
+TotalConfirmed = CALCULATE(SUM('Casos Covid-19'[Confirmed]), FILTER(Calendario, Calendario[Date] = MAX(Calendario[Date])))
+
+Confirmed24h = [TotalConfirmed] - CALCULATE([TotalConfirmed], DATEADD(Calendario[Date], -1, DAY))
+
+CountriesAffected = CALCULATE(COUNTROWS('Country/Region'), FILTER('Casos Covid-19', 'Casos Covid-19'[Confirmed] > 0))
